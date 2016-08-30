@@ -99,7 +99,7 @@ test：
         toggleThemeSetting();//这里实现了动画的效果，增强用户体验。
         refreshUI();
     }
-| ![](http://diycode.b0.upaiyun.com/photo/2016/eeb88e2a8812262c25e220479f05a3a3.gif)| ![](http://diycode.b0.upaiyun.com/photo/2016/59c44219315c5ea097afdc75e5563b87.gif)|
+| ![](https://github.com/qydq/awNightDay/blob/master/screenpic/README.md.gif)| 
 
 ## 配置XML
 
