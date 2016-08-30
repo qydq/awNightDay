@@ -1,9 +1,10 @@
 package com.lyue.awnightday.activity;
 
+import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lyue.awnightday.R;
@@ -15,9 +16,11 @@ import java.io.File;
 
 public class AuthorActivity extends AppCompatActivity {
 
+    private static final int CAMERA_REQUEST_CODE = 1;
     private DayNightHelper mDayNightHelper;
     private TextView tvLuue;
     private CapturePhotoHelper capturePhotoHelper;
+    private ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +29,7 @@ public class AuthorActivity extends AppCompatActivity {
         initTheme();
         setContentView(R.layout.activity_author);
         tvLuue = (TextView) findViewById(R.id.tvLuue);
+        imageView = (ImageView) findViewById(R.id.imageView);
         _initData();
     }
 
