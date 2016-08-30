@@ -1,4 +1,4 @@
-package com.lyue.awnightday.study.helper;
+package com.lyue.awnightday.helper;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -8,7 +8,6 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.widget.Toast;
 
-import com.lyue.awnightday.R;
 import com.clock.utils.bitmap.BitmapUtils;
 
 import java.io.File;
@@ -55,7 +54,7 @@ public class CapturePhotoHelper {
             createPhotoFile();
 
             if (mPhotoFile == null) {
-                Toast.makeText(mActivity, R.string.camera_open_error, Toast.LENGTH_SHORT).show();
+                Toast.makeText(mActivity, "mPhotofile is null", Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -65,7 +64,7 @@ public class CapturePhotoHelper {
             mActivity.startActivityForResult(captureIntent, CAPTURE_PHOTO_REQUEST_CODE);
 
         } else {
-            Toast.makeText(mActivity, R.string.camera_open_error, Toast.LENGTH_SHORT).show();
+            Toast.makeText(mActivity, "打开错误", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -91,7 +90,7 @@ public class CapturePhotoHelper {
             }
         } else {
             mPhotoFile = null;
-            Toast.makeText(mActivity, R.string.not_specify_a_directory, Toast.LENGTH_SHORT).show();
+            Toast.makeText(mActivity, "不存在该目录！", Toast.LENGTH_SHORT).show();
         }
     }
 

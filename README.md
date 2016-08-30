@@ -8,18 +8,65 @@ test：
     在github上更新代码，不要更新无用的代码，应该做到每一份代码做好相应的README.md，README.md必须要有该项目的功能，再上传至github上面。该awNightDay项目为以后上传项目时的一个参考项目，格式严格按照这个标准去实现。下面列出上传项目必要的规范
 
 	时间说明：
-	创建时间：2016年08月29日;最近修改时间：2016年08月29日。
 	
-1）前言（包含了该项目主要实现的功能的简短说明，运行配置）。
-2）实现效果（如果没有可以省略，但是建议要包含，因为项目以后自己看到的时候会帮助自己理解）
-3）思路或步骤（代码）。
-4）重要知识点（总结，思考）。
-5）内容参考（尊重原创）。
-6）联系作者。
-## ---------------------------------------woshifengexian----------------------------------------------##
+	创建时间：2016年08月29日;最近修改时间：2016年08月30日。
+	
+	Tips 
+	
+1。前言（包含了该项目主要实现的功能的简短说明，运行配置）。
+
+2。实现效果（如果没有可以省略，但是建议要包含，因为项目以后自己看到的时候会帮助自己理解）。
+
+3。思路或步骤（代码）。
+
+4。重要知识点（总结，思考）。
+
+5。内容参考（尊重原创）。
+
+6。联系作者。
+
+## -----------------------------woshifengexian------------------------------------##
 
 
     创建时间：2016年08月29日;最近修改时间：2016年08月29日。
+	
+	Tips ： 在这个项目中附加了一个小功能，拍照（主要是为了说明解决android系统文件系统的简单操作），点击夜间模式切换的子AuthorActivity中的textview会调用（封装了得相机的接口CapturePhotoHelper），这里涉及到File的用法以及讲解。
+	
+	更多文件操作请参考：https://developer.android.com/training/basics/data-storage/files.html#WriteInternalStorage
+	
+	
+	/**
+	// 判断SD卡是否存在。返回true代表存在，false代表不存在；
+        // 特别说明：针对不同的Android手机有的厂商没有为手机配置SD卡，像三星有几款手机不具有拓展内存的。
+        // 废话再多一点补充：
+        // 这里要区别一下SD卡，外部存储卡，内部存储卡，运行内存这些都是不同的概念。不是特别理解的同学请查一下google或者关注我的博客里面有一篇文章是介绍这些概念的。
+        // 比如说我要写一个相册的程序，图片肯定是存在外部的存储卡中，而如果我需要的是存储一些配置信息则是放在内部存储卡中。
+        // 操作一个文件（读写，创建文件或者目录）是通过File类来完成的，这个操作和java中完全一致。
+    // 外部存储external storage和内部存储internal storage。
+	**/
+	
+	代码：
+	
+	if (Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
+            File skRoot = Environment.getExternalStorageDirectory();
+            capturePhotoHelper = new CapturePhotoHelper(this, skRoot);
+        } else {
+            System.out.println("没有sd卡");
+        }
+		
+	Helper中调用相机的操作代码：
+	
+	Intent captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+    Uri fileUri = Uri.fromFile(mPhotoFile);
+    captureIntent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
+    mActivity.startActivityForResult(captureIntent, CAPTURE_PHOTO_REQUEST_CODE);
+		
+	当然操作文件需要相应的权限：
+	
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+	
+## -----------------------------woshifengexian------------------------------------##	
 
 ## 前言
 
@@ -163,6 +210,7 @@ test：
  * @author Clock
  * @since 2016-08-11
  */
+ 
 public class DayNightActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener {
 
     private final static String TAG = DayNightActivity.class.getSimpleName();
@@ -239,6 +287,7 @@ public class DayNightActivity extends AppCompatActivity implements CompoundButto
     /**
      * 切换主题设置
      */
+	 
     private void toggleThemeSetting() {
         if (mDayNightHelper.isDay()) {
             mDayNightHelper.setMode(DayNight.NIGHT);
@@ -252,6 +301,7 @@ public class DayNightActivity extends AppCompatActivity implements CompoundButto
     /**
      * 使用简书的实现套路来切换夜间主题
      */
+	 
     private void changeThemeByJianShu() {
         toggleThemeSetting();
         refreshUI();
@@ -260,6 +310,7 @@ public class DayNightActivity extends AppCompatActivity implements CompoundButto
     /**
      * 使用知乎的实现套路来切换夜间主题
      */
+	 
     private void changeThemeByZhiHu() {
         showAnimation();
         toggleThemeSetting();
@@ -269,6 +320,7 @@ public class DayNightActivity extends AppCompatActivity implements CompoundButto
     /**
      * 刷新UI界面
      */
+	 
     private void refreshUI() {
         TypedValue background = new TypedValue();//背景色
         TypedValue textColor = new TypedValue();//字体颜色
@@ -336,6 +388,7 @@ public class DayNightActivity extends AppCompatActivity implements CompoundButto
     /**
      * 刷新 StatusBar
      */
+	 
     private void refreshStatusBar() {
         if (Build.VERSION.SDK_INT >= 21) {
             TypedValue typedValue = new TypedValue();
@@ -348,6 +401,7 @@ public class DayNightActivity extends AppCompatActivity implements CompoundButto
     /**
      * 展示一个切换动画
      */
+	 
     private void showAnimation() {
         final View decorView = getWindow().getDecorView();
         Bitmap cacheBitmap = getCacheBitmapFromView(decorView);
@@ -376,6 +430,7 @@ public class DayNightActivity extends AppCompatActivity implements CompoundButto
      * @param view
      * @return
      */
+	 
     private Bitmap getCacheBitmapFromView(View view) {
         final boolean drawingCacheEnabled = true;
         view.setDrawingCacheEnabled(drawingCacheEnabled);
@@ -419,7 +474,8 @@ Email：qyddai@gmail.com。
 Github上面都是开源项目，欢迎大家下载我的项目或者有问题的同学可以发送邮件给我，如果收到邮件我会第一次时间回复处理。
 
 
-与项目无关代码（备份二维码）：
+
+##  与项目无关代码（备份二维码）：
 
 Set<String> mLinkedSetString = Collections.synchronizedSet(new LinkedHashSet<String>());
 private int times = 0;

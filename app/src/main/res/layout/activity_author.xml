@@ -18,10 +18,12 @@
         android:background="@mipmap/lufy" />
 
     <TextView
+        android:id="@+id/tvLuue"
         android:layout_width="250dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginTop="10dp"
         android:background="?attr/qydqBackground"
+        android:clickable="true"
         android:gravity="center"
         android:text="张露月"
         android:textColor="?attr/qydqTextColor" />
